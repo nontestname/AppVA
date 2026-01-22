@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An Automated Voice Assistant Generation Framework from GUI Test Cases Reusing">
+    <meta name="description" content="From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants">
     
-    <link rel="canonical" href="https://nontestname.github.io/ava-gen/old/getting-started/">
+    <link rel="canonical" href="https://nontestname.github.io/appva/old/getting-started/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     
-    <title>Getting Started with AVA-Gen - AVA-Gen</title>
+    <title>Getting Started with AVA-Gen - AppVA</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -59,7 +59,7 @@
             <!-- Main title -->
 
             
-              <a class="navbar-brand" href="../..">AVA-Gen</a>
+              <a class="navbar-brand" href="../..">AppVA</a>
             
         </div>
 
@@ -107,7 +107,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/nontestname/ava-gen"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://github.com/nontestname/appva"><i class="fab fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -137,11 +137,13 @@
 local development. For more detail, see the other docs in this folder.</p>
 <h2 id="1-install-dependencies">1. Install dependencies<a class="headerlink" href="#1-install-dependencies" title="Permanent link">&para;</a></h2>
 <p>From the project root:</p>
-<pre class="highlight"><code class="language-bash">pip install .</code></pre>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>.
+</code></pre></div>
 <p>This installs the <code>ava-gen</code> CLI and the runtime components.</p>
 <h2 id="2-configure-environment">2. Configure environment<a class="headerlink" href="#2-configure-environment" title="Permanent link">&para;</a></h2>
 <p>Copy the example configuration and edit it:</p>
-<pre class="highlight"><code class="language-bash">cp .env.example .env</code></pre>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+</code></pre></div>
 <p>Set at least:</p>
 <ul>
 <li><code>OPENAI_API_KEY</code> – your OpenAI API key.</li>
@@ -150,14 +152,16 @@ local development. For more detail, see the other docs in this folder.</p>
 </ul>
 <h2 id="3-run-the-cli">3. Run the CLI<a class="headerlink" href="#3-run-the-cli" title="Permanent link">&para;</a></h2>
 <p>See <code>docs/cli.md</code> for the full pipeline. A typical flow:</p>
-<pre class="highlight"><code class="language-bash">ava-gen prepare &lt;app_id&gt; path/to/MyTests.java
-ava-gen pipeline &lt;app_id&gt;</code></pre>
+<div class="highlight"><pre><span></span><code>ava-gen<span class="w"> </span>prepare<span class="w"> </span>&lt;app_id&gt;<span class="w"> </span>path/to/MyTests.java
+ava-gen<span class="w"> </span>pipeline<span class="w"> </span>&lt;app_id&gt;
+</code></pre></div>
 <p>This populates your workspace with extracted tests, VA methods, skill
 descriptions, and intent artifacts.</p>
 <h2 id="4-start-the-runtime-server">4. Start the runtime server<a class="headerlink" href="#4-start-the-runtime-server" title="Permanent link">&para;</a></h2>
 <p>Once you have generated skills, intents, and action plans, you can start the
 runtime server:</p>
-<pre class="highlight"><code class="language-bash">uvicorn runtime.api.server:app --reload</code></pre>
+<div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>runtime.api.server:app<span class="w"> </span>--reload
+</code></pre></div>
 <p>The runtime API surface and conversation flow are described in
 <code>docs/runtime_design.md</code> and <code>docs/intent_validation.md</code>.</p></div>
         

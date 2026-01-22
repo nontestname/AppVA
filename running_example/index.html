@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An Automated Voice Assistant Generation Framework from GUI Test Cases Reusing">
+    <meta name="description" content="From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants">
     
-    <link rel="canonical" href="https://nontestname.github.io/ava-gen/running_example/">
+    <link rel="canonical" href="https://nontestname.github.io/appva/running_example/">
     <link rel="shortcut icon" href="../img/favicon.ico">
 
     
-    <title>Running Example - AVA-Gen</title>
+    <title>Running Example - AppVA</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -59,7 +59,7 @@
             <!-- Main title -->
 
             
-              <a class="navbar-brand" href="..">AVA-Gen</a>
+              <a class="navbar-brand" href="..">AppVA</a>
             
         </div>
 
@@ -117,7 +117,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/nontestname/ava-gen"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://github.com/nontestname/appva"><i class="fab fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -129,7 +129,7 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#ava-gen-running-example-for-preparing-va-ready-artifacts">AVA-Gen Running Example for preparing VA-Ready Artifacts</a></li>
+        <li class="first-level active"><a href="#appva-running-example-for-preparing-va-artifacts">AppVA Running Example for preparing VA Artifacts</a></li>
             <li class="second-level"><a href="#1-prepare-the-example-in-the-real-workspace">1. Prepare the example in the real workspace</a></li>
                 
             <li class="second-level"><a href="#2-run-the-pipeline-for-huvmiklosplees_tracker">2. Run the pipeline for hu.vmiklos.plees_tracker</a></li>
@@ -142,14 +142,14 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="ava-gen-running-example-for-preparing-va-ready-artifacts">AVA-Gen Running Example for preparing VA-Ready Artifacts<a class="headerlink" href="#ava-gen-running-example-for-preparing-va-ready-artifacts" title="Permanent link">&para;</a></h1>
-<p>This guide walks through a <strong>concrete, end-to-end example</strong> that generating all the VA-Ready Artifacts that your AVA-Gen sever may need later, using the example tests and application descriptions under <code>workspace/</code> folder and the bundled example app:</p>
+<h1 id="appva-running-example-for-preparing-va-artifacts">AppVA Running Example for preparing VA Artifacts<a class="headerlink" href="#appva-running-example-for-preparing-va-artifacts" title="Permanent link">&para;</a></h1>
+<p>This guide walks through a <strong>concrete, end-to-end example</strong> that generating all the VA-Ready Artifacts that your AppVA sever may need later, using the example tests and application descriptions under <code>workspace/</code> folder and the bundled example app:</p>
 <ul>
 <li><code>app_id</code>: <code>hu.vmiklos.plees_tracker</code></li>
 </ul>
 <p>We assume you have already:</p>
 <ul>
-<li>Installed AVA‑Gen from this repo (<code>pip install .</code> or <code>pipx install ava-gen</code>)</li>
+<li>Installed AppVA from this repo (<code>pip install .</code> or <code>pipx install appva</code>)</li>
 <li>Configured <code>OPENAI_API_KEY</code> via environment or <code>.env</code></li>
 </ul>
 <p>All commands below are run from the project root (where <code>pyproject.toml</code> lives).</p>
@@ -161,29 +161,28 @@
 <li><code>examples/hu.vmiklos.plees_tracker/app_introduction.txt</code></li>
 </ul>
 <p>Use the <code>prepare</code> command to copy these into the <code>workspace/</code> folder:</p>
-<pre class="highlight"><code class="language-bash">ava-gen prepare hu.vmiklos.plees_tracker examples/hu.vmiklos.plees_tracker/DeleteAllSleepsTest.java
-ava-gen prepare hu.vmiklos.plees_tracker examples/hu.vmiklos.plees_tracker/app_introduction.txt</code></pre>
+<div class="highlight"><pre><span></span><code>appva<span class="w"> </span>prepare<span class="w"> </span>hu.vmiklos.plees_tracker<span class="w"> </span>examples/hu.vmiklos.plees_tracker/DeleteAllSleepsTest.java
+appva<span class="w"> </span>prepare<span class="w"> </span>hu.vmiklos.plees_tracker<span class="w"> </span>examples/hu.vmiklos.plees_tracker/app_introduction.txt
+</code></pre></div>
 <p>After this, your real workspace will contain:</p>
-<pre class="highlight"><code class="language-text">workspace/
+<div class="highlight"><pre><span></span><code>workspace/
   hu.vmiklos.plees_tracker/
     input/
       DeleteAllSleepsTest.java
-      app_introduction.txt</code></pre>
+      app_introduction.txt
+</code></pre></div>
 <p>This is exactly the same structure you will use for your own apps, just with a
 different <code>{app_id}</code>, different tests and app introduction.</p>
 <hr />
 <h2 id="2-run-the-pipeline-for-huvmiklosplees_tracker">2. Run the pipeline for <code>hu.vmiklos.plees_tracker</code><a class="headerlink" href="#2-run-the-pipeline-for-huvmiklosplees_tracker" title="Permanent link">&para;</a></h2>
 <p>Now run the full pipeline against the <code>workspace/</code>:</p>
-<pre class="highlight"><code class="language-bash">ava-gen pipeline hu.vmiklos.plees_tracker</code></pre>
+<div class="highlight"><pre><span></span><code>appva<span class="w"> </span>pipeline<span class="w"> </span>hu.vmiklos.plees_tracker
+</code></pre></div>
 <p>This will automatically:</p>
 <ul>
 <li>Parse the Espresso test class from <code>workspace/hu.vmiklos.plees_tracker/input/</code></li>
-<li>
-<p>Generate <em>Code Artifacts</em>:</p>
-</li>
-<li>
-<p><code>workspace/hu.vmiklos.plees_tracker/extracted_tests/</code> – per-test method Java files</p>
-</li>
+<li>Generate <em>Code Artifacts</em>:</li>
+<li><code>workspace/hu.vmiklos.plees_tracker/extracted_tests/</code> – per-test method Java files</li>
 <li>
 <p><code>workspace/hu.vmiklos.plees_tracker/va_methods/</code> – converted VA methods</p>
 </li>
@@ -196,7 +195,7 @@ different <code>{app_id}</code>, different tests and app introduction.</p>
 <li><code>workspace/actionplan/hu.vmiklos.plees_tracker_actionplan.json</code></li>
 </ul>
 <p>After the command completes, your workspace will look roughly like:</p>
-<pre class="highlight"><code class="language-text">workspace/
+<div class="highlight"><pre><span></span><code>workspace/
   actionplan/
     hu.vmiklos.plees_tracker_actionplan.json
 
@@ -214,22 +213,25 @@ different <code>{app_id}</code>, different tests and app introduction.</p>
     extracted_tests/
       deleteAllSleepsTest.java
     va_methods/
-      deleteAllSleeps.java</code></pre>
+      deleteAllSleeps.java
+</code></pre></div>
 <p><strong>Congratulations!</strong> Now you have succesfully generate all the VA-Ready Artifcats for your app <code>hu.vmiklos.plees_tracker</code> with skill extracted from test method <code>DeleteAllSleepsTest.java</code></p>
-<p>The AVA-Gen server is ready to use all these artifacts to support the Voice Assistant on deleting all sleeps. Please see this to check details about AVA-Gen runtime server-client architecture.</p>
+<p>The AppVA server is ready to use all these artifacts to support the Voice Assistant on deleting all sleeps. Please see this to check details about AppVA runtime server-client architecture.</p>
 <hr />
 <h2 id="3-adapt-the-pattern-to-your-own-app">3. Adapt the pattern to your own app<a class="headerlink" href="#3-adapt-the-pattern-to-your-own-app" title="Permanent link">&para;</a></h2>
-<p>To use AVA‑Gen with your own app under the same <code>workspace/</code> root:</p>
+<p>To use AppVA with your own app under the same <code>workspace/</code> root:</p>
 <ol>
 <li>Choose your app id, e.g. <code>com.example.myapp</code>.</li>
 <li>Prepare input files:</li>
 </ol>
-<pre class="highlight"><code class="language-bash">ava-gen prepare com.example.myapp path/to/MyAppTest.java
-ava-gen prepare com.example.myapp path/to/app_introduction.txt   # optional</code></pre>
+<div class="highlight"><pre><span></span><code>appva<span class="w"> </span>prepare<span class="w"> </span>com.example.myapp<span class="w"> </span>path/to/MyAppTest.java
+appva<span class="w"> </span>prepare<span class="w"> </span>com.example.myapp<span class="w"> </span>path/to/app_introduction.txt<span class="w">   </span><span class="c1"># optional</span>
+</code></pre></div>
 <ol>
 <li>Run the pipeline:</li>
 </ol>
-<pre class="highlight"><code class="language-bash">ava-gen pipeline com.example.myapp</code></pre>
+<div class="highlight"><pre><span></span><code>appva<span class="w"> </span>pipeline<span class="w"> </span>com.example.myapp
+</code></pre></div>
 <p>You will get the same kinds of outputs as the <code>hu.vmiklos.plees_tracker</code> example,
 but under <code>workspace/com.example.myapp/</code> and shared <code>workspace/skills_description</code>,
 <code>workspace/intent</code>, and <code>workspace/actionplan</code>.</p>
@@ -237,7 +239,8 @@ but under <code>workspace/com.example.myapp/</code> and shared <code>workspace/s
 <h2 id="4-optional-start-the-runtime-server">4. (Optional) Start the runtime server<a class="headerlink" href="#4-optional-start-the-runtime-server" title="Permanent link">&para;</a></h2>
 <p>Once your example (and/or your own app) has been processed via the pipeline, you
 can start the runtime server from the project root:</p>
-<pre class="highlight"><code class="language-bash">uvicorn runtime.api.server:app --reload</code></pre>
+<div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>runtime.api.server:app<span class="w"> </span>--reload
+</code></pre></div>
 <p>Before starting the server, make sure:</p>
 <ul>
 <li><code>workspace/hu.vmiklos.plees_tracker/actionplan/hu.vmiklos.plees_tracker_actionplan.json</code>

@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An Automated Voice Assistant Generation Framework from GUI Test Cases Reusing">
+    <meta name="description" content="From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants">
     
-    <link rel="canonical" href="https://nontestname.github.io/ava-gen/runtime_server_client/">
+    <link rel="canonical" href="https://nontestname.github.io/appva/runtime_server_client/">
     <link rel="shortcut icon" href="../img/favicon.ico">
 
     
-    <title>Runtime Server & Client - AVA-Gen</title>
+    <title>Runtime Server & Client - AppVA</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -59,7 +59,7 @@
             <!-- Main title -->
 
             
-              <a class="navbar-brand" href="..">AVA-Gen</a>
+              <a class="navbar-brand" href="..">AppVA</a>
             
         </div>
 
@@ -117,7 +117,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/nontestname/ava-gen"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://github.com/nontestname/appva"><i class="fab fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -129,13 +129,13 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#using-the-avagen-runtime-server-client">Using the AVA‑Gen Runtime (Server &amp; Client)</a></li>
+        <li class="first-level active"><a href="#using-the-appva-runtime-server-client">Using the AppVA Runtime (Server &amp; Client)</a></li>
             <li class="second-level"><a href="#1-start-the-runtime-server">1. Start the runtime server</a></li>
                 
             <li class="second-level"><a href="#2-using-an-android-emulator">2. Using an Android emulator</a></li>
                 
                 <li class="third-level"><a href="#21-start-an-emulator">2.1 Start an emulator</a></li>
-                <li class="third-level"><a href="#22-install-the-avagen-client-apk">2.2 Install the AVA‑Gen client APK</a></li>
+                <li class="third-level"><a href="#22-install-the-appva-client-apk">2.2 Install the AppVA client APK</a></li>
                 <li class="third-level"><a href="#23-install-your-exampleapp-under-test-apk">2.3 Install your example/app-under-test APK</a></li>
                 <li class="third-level"><a href="#24-configure-the-client-app-to-talk-to-the-server">2.4 Configure the client app to talk to the server</a></li>
             <li class="second-level"><a href="#3-using-a-real-android-device-phone">3. Using a real Android device (phone)</a></li>
@@ -150,17 +150,17 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="using-the-avagen-runtime-server-client">Using the AVA‑Gen Runtime (Server &amp; Client)<a class="headerlink" href="#using-the-avagen-runtime-server-client" title="Permanent link">&para;</a></h1>
+<h1 id="using-the-appva-runtime-server-client">Using the AppVA Runtime (Server &amp; Client)<a class="headerlink" href="#using-the-appva-runtime-server-client" title="Permanent link">&para;</a></h1>
 <p>This guide explains how to:</p>
 <ul>
-<li>Start the AVA‑Gen runtime server.</li>
+<li>Start the AppVA runtime server.</li>
 <li>Call the <code>/agent</code> HTTP endpoints from a client.</li>
 <li>Connect an Android emulator or a real phone to the server.</li>
 <li>Note the small differences for macOS vs. Windows hosts.</li>
 </ul>
 <p>It assumes you have already:</p>
 <ul>
-<li>Installed AVA‑Gen (<code>pip install .</code> or <code>pipx install ava-gen</code>).</li>
+<li>Installed AppVA (<code>pip install .</code> or <code>pipx install appva</code>).</li>
 <li>Configured <code>OPENAI_API_KEY</code> and run the pipeline so that:</li>
 <li><code>workspace/skills_description/*.json</code></li>
 <li><code>workspace/intent/intent_list_full.json</code></li>
@@ -171,7 +171,8 @@
 <hr />
 <h2 id="1-start-the-runtime-server">1. Start the runtime server<a class="headerlink" href="#1-start-the-runtime-server" title="Permanent link">&para;</a></h2>
 <p>From the project root:</p>
-<pre class="highlight"><code class="language-bash">uvicorn runtime.api.server:app --reload</code></pre>
+<div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>runtime.api.server:app<span class="w"> </span>--reload
+</code></pre></div>
 <p>This will:</p>
 <ul>
 <li>Load configuration from your environment / <code>.env</code> (see <code>configs/settings.py</code>).</li>
@@ -182,29 +183,33 @@
 <ul>
 <li><strong>macOS / Linux</strong></li>
 </ul>
-<pre class="highlight"><code class="language-bash">python -m uvicorn runtime.api.server:app --reload</code></pre>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>uvicorn<span class="w"> </span>runtime.api.server:app<span class="w"> </span>--reload
+</code></pre></div>
 <ul>
 <li><strong>Windows (PowerShell / Command Prompt)</strong></li>
 </ul>
-<pre class="highlight"><code class="language-bash">py -m uvicorn runtime.api.server:app --reload</code></pre>
+<div class="highlight"><pre><span></span><code>py<span class="w"> </span>-m<span class="w"> </span>uvicorn<span class="w"> </span>runtime.api.server:app<span class="w"> </span>--reload
+</code></pre></div>
 <blockquote>
 <p>Tip: To allow access from other devices on your local network, bind to
 all interfaces:</p>
-<pre class="highlight"><code class="language-bash">uvicorn runtime.api.server:app --host 0.0.0.0 --port 8000 --reload</code></pre>
+<div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>runtime.api.server:app<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span><span class="w"> </span>--reload
+</code></pre></div>
 </blockquote>
 <p>You can verify the server is up by opening:</p>
 <ul>
 <li><code>http://127.0.0.1:8000/agent/healthz</code></li>
 </ul>
 <p>You should see:</p>
-<pre class="highlight"><code class="language-json">{ "status": "ok" }</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
 <hr />
 <h2 id="2-using-an-android-emulator">2. Using an Android emulator<a class="headerlink" href="#2-using-an-android-emulator" title="Permanent link">&para;</a></h2>
 <p>To run the example app (or your own APK) in an Android emulator and connect it
-to the AVA‑Gen runtime server, you will typically:</p>
+to the AppVA runtime server, you will typically:</p>
 <ol>
 <li>Start the emulator.</li>
-<li>Install the AVA‑Gen client APK (<code>ava-gen-client.apk</code>).</li>
+<li>Install the AppVA client APK (<code>ava-gen-client.apk</code>).</li>
 <li>Install your example/app-under-test APK.</li>
 <li>Configure the client app to talk to the host machine (<code>10.0.2.2:8000</code>).</li>
 </ol>
@@ -214,10 +219,12 @@ to the AVA‑Gen runtime server, you will typically:</p>
 <li>Open Android Studio → Device Manager → create / start a virtual device.</li>
 <li>Or run:</li>
 </ul>
-<pre class="highlight"><code class="language-bash">emulator -avd &lt;your_avd_name&gt;</code></pre>
-<h3 id="22-install-the-avagen-client-apk">2.2 Install the AVA‑Gen client APK<a class="headerlink" href="#22-install-the-avagen-client-apk" title="Permanent link">&para;</a></h3>
-<p>Once the emulator is running, install the provided AVA‑Gen client APK:</p>
-<pre class="highlight"><code class="language-bash">adb install client/ava-gen-client_v1.apk</code></pre>
+<div class="highlight"><pre><span></span><code>emulator<span class="w"> </span>-avd<span class="w"> </span>&lt;your_avd_name&gt;
+</code></pre></div>
+<h3 id="22-install-the-appva-client-apk">2.2 Install the AppVA client APK<a class="headerlink" href="#22-install-the-appva-client-apk" title="Permanent link">&para;</a></h3>
+<p>Once the emulator is running, install the provided AppVA client APK:</p>
+<div class="highlight"><pre><span></span><code>adb<span class="w"> </span>install<span class="w"> </span>client/ava-gen-client_v1.apk
+</code></pre></div>
 <p>On first launch, make sure:</p>
 <ul>
 <li>The app has <strong>Microphone</strong> permission (Search Permissions → Microphone and enable it).</li>
@@ -225,12 +232,15 @@ to the AVA‑Gen runtime server, you will typically:</p>
 </ul>
 <h3 id="23-install-your-exampleapp-under-test-apk">2.3 Install your example/app-under-test APK<a class="headerlink" href="#23-install-your-exampleapp-under-test-apk" title="Permanent link">&para;</a></h3>
 <p>Once the emulator is running, install your example APK via <code>adb</code>:</p>
-<pre class="highlight"><code class="language-bash">adb install path/to/your_app.apk</code></pre>
+<div class="highlight"><pre><span></span><code>adb<span class="w"> </span>install<span class="w"> </span>path/to/your_app.apk
+</code></pre></div>
 <p>If you rebuilt the APK, you may need:</p>
-<pre class="highlight"><code class="language-bash">adb install -r path/to/your_app.apk</code></pre>
+<div class="highlight"><pre><span></span><code>adb<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>path/to/your_app.apk
+</code></pre></div>
 <p>For the running example of <code>hu.vmiklos.plees_tracker</code>, please:</p>
-<pre class="highlight"><code class="language-bash">adb install examples/plees-tracker-24.8.1.apk</code></pre>
-<p>You should see AVA-Gen app in the Accessibility Tool List after the installation.</p>
+<div class="highlight"><pre><span></span><code>adb<span class="w"> </span>install<span class="w"> </span>examples/plees-tracker-24.8.1.apk
+</code></pre></div>
+<p>You should see AppVA app in the Accessibility Tool List after the installation.</p>
 <h3 id="24-configure-the-client-app-to-talk-to-the-server">2.4 Configure the client app to talk to the server<a class="headerlink" href="#24-configure-the-client-app-to-talk-to-the-server" title="Permanent link">&para;</a></h3>
 <p>Inside an Android emulator:</p>
 <ul>
@@ -239,7 +249,7 @@ to the AVA‑Gen runtime server, you will typically:</p>
 <p>So as long as you run the server and the emulator (with client) on the same computer (MacOS or Windows), you should see everything connect together automatically.</p>
 <hr />
 <h2 id="3-using-a-real-android-device-phone">3. Using a real Android device (phone)<a class="headerlink" href="#3-using-a-real-android-device-phone" title="Permanent link">&para;</a></h2>
-<p>You can also connect a physical phone to the AVA‑Gen runtime running on your
+<p>You can also connect a physical phone to the AppVA runtime running on your
 Mac or Windows machine. There are two common patterns:</p>
 <ol>
 <li>Use <code>adb reverse</code> (USB cable, no Wi‑Fi configuration).</li>
@@ -252,17 +262,20 @@ Mac or Windows machine. There are two common patterns:</p>
 <li>Connect the phone via USB.</li>
 <li>Verify the device is recognized:</li>
 </ol>
-<pre class="highlight"><code class="language-bash">adb devices</code></pre>
+<div class="highlight"><pre><span></span><code>adb<span class="w"> </span>devices
+</code></pre></div>
 <ol>
-<li>Start the AVA‑Gen server on your host:</li>
+<li>Start the AppVA server on your host:</li>
 </ol>
-<pre class="highlight"><code class="language-bash">uvicorn runtime.api.server:app --reload</code></pre>
+<div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>runtime.api.server:app<span class="w"> </span>--reload
+</code></pre></div>
 <ol>
 <li>Run <code>adb reverse</code> so the device can reach the host’s port 8000 via its own
    <code>localhost</code>:</li>
 </ol>
-<pre class="highlight"><code class="language-bash">adb reverse tcp:8000 tcp:8000</code></pre>
-<p>When the app calls, traffic is forwarded over USB to the AVA‑Gen server running on your Mac or Windows machine.</p>
+<div class="highlight"><pre><span></span><code>adb<span class="w"> </span>reverse<span class="w"> </span>tcp:8000<span class="w"> </span>tcp:8000
+</code></pre></div>
+<p>When the app calls, traffic is forwarded over USB to the AppVA server running on your Mac or Windows machine.</p>
 <blockquote>
 <p>On some cases, firewalls can block incoming connections. If the app cannot reach the server, check your firewall settings on macOS (System Settings → Network/Firewall) or Windows (Windows Defender Firewall).</p>
 </blockquote>
@@ -287,19 +300,22 @@ Mac or Windows machine. There are two common patterns:</p>
 </li>
 </ul>
 <h3 id="41-start-a-session-curl">4.1 Start a session (curl)<a class="headerlink" href="#41-start-a-session-curl" title="Permanent link">&para;</a></h3>
-<pre class="highlight"><code class="language-bash">curl -X POST http://127.0.0.1:8000/agent/start_session</code></pre>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8000/agent/start_session
+</code></pre></div>
 <p>Example response:</p>
-<pre class="highlight"><code class="language-json">{ "session_id": "abc123-session-id" }</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123-session-id&quot;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
 <h3 id="42-send-a-request-curl">4.2 Send a request (curl)<a class="headerlink" href="#42-send-a-request-curl" title="Permanent link">&para;</a></h3>
 <p>Use the <code>session_id</code> above and the app id you have processed (for example
 <code>hu.vmiklos.plees_tracker</code>):</p>
-<pre class="highlight"><code class="language-bash">curl -X POST http://127.0.0.1:8000/agent/request \
-  -H "Content-Type: application/json" \
-  -d '{
-    "session_id": "abc123-session-id",
-    "app_id": "hu.vmiklos.plees_tracker",
-    "message": "Delete all existing sleep records"
-  }'</code></pre>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8000/agent/request<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;session_id&quot;: &quot;abc123-session-id&quot;,</span>
+<span class="s1">    &quot;app_id&quot;: &quot;hu.vmiklos.plees_tracker&quot;,</span>
+<span class="s1">    &quot;message&quot;: &quot;Delete all existing sleep records&quot;</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
 <p>The response shape is defined in <code>runtime/models/api_models.py</code> and normally
 includes a high-level status and, when applicable, an ActionPlan derived from
 your <code>workspace/actionplan/&lt;app_id&gt;_actionplan.json</code>.</p>
@@ -311,11 +327,12 @@ your <code>workspace/actionplan/&lt;app_id&gt;_actionplan.json</code>.</p>
 <li>Create another <strong>POST</strong> request to <code>http://127.0.0.1:8000/agent/request</code>.</li>
 <li>Set the body type to <strong>raw JSON</strong> and provide:</li>
 </ol>
-<pre class="highlight"><code class="language-json">{
-  "session_id": "abc123-session-id",
-  "app_id": "hu.vmiklos.plees_tracker",
-  "message": "Delete all existing sleep records"
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123-session-id&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;app_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hu.vmiklos.plees_tracker&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Delete all existing sleep records&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
 <ol>
 <li>Send the request and inspect the JSON response (clarifications, selected
    ActionPlan, etc.).</li>

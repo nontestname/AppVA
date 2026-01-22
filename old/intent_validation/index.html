@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An Automated Voice Assistant Generation Framework from GUI Test Cases Reusing">
+    <meta name="description" content="From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants">
     
-    <link rel="canonical" href="https://nontestname.github.io/ava-gen/old/intent_validation/">
+    <link rel="canonical" href="https://nontestname.github.io/appva/old/intent_validation/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     
-    <title>Intent Validation Design (AVA-Gen) - AVA-Gen</title>
+    <title>Intent Validation Design (AVA-Gen) - AppVA</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -59,7 +59,7 @@
             <!-- Main title -->
 
             
-              <a class="navbar-brand" href="../..">AVA-Gen</a>
+              <a class="navbar-brand" href="../..">AppVA</a>
             
         </div>
 
@@ -107,7 +107,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/nontestname/ava-gen"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://github.com/nontestname/appva"><i class="fab fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -165,43 +165,47 @@
 <hr />
 <h2 id="2-data-sources-skills-intents-intentmethod-map">2. Data Sources: skills → intents + intent→method map<a class="headerlink" href="#2-data-sources-skills-intents-intentmethod-map" title="Permanent link">&para;</a></h2>
 <p>For each app, we start from a skills description file under <code>workspace/</code>:</p>
-<pre class="highlight"><code class="language-text">workspace/
+<div class="highlight"><pre><span></span><code>workspace/
   skills_description/
-    {app_id}_skills_description.json</code></pre>
+    {app_id}_skills_description.json
+</code></pre></div>
 <p>Typical format (context_methods variant):</p>
-<pre class="highlight"><code class="language-json">{
-  "app_id": "hu.vmiklos.plees_tracker",
-  "context_methods": {
-    "accessStatistics": {
-      "description-short": "Open sleep statistics view",
-      "description-detail": "Opens the app's statistics screen to view summarized sleep data and averages."
-    }
-  }
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;app_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hu.vmiklos.plees_tracker&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;context_methods&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;accessStatistics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;description-short&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Open sleep statistics view&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;description-detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Opens the app&#39;s statistics screen to view summarized sleep data and averages.&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>From this, <code>IntentInterpreter</code> derives two runtime artifacts under <code>workspace/intent/</code>:</p>
 <ol>
 <li><strong>Intent list</strong> – for GPT only</li>
 </ol>
-<pre class="highlight"><code class="language-json">[
-  {
-    "app_id": "hu.vmiklos.plees_tracker",
-    "intents": [
-      "Open sleep statistics view",
-      "Opens the app's statistics screen to view summarized sleep data and averages."
-    ],
-    "intent_summary": "Summarizes the main capabilities of the app in one short sentence."
-  }
-]</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;app_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hu.vmiklos.plees_tracker&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;intents&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;Open sleep statistics view&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;Opens the app&#39;s statistics screen to view summarized sleep data and averages.&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;intent_summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Summarizes the main capabilities of the app in one short sentence.&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
 <p>Stored at: <code>workspace/intent/intent_list_full.json</code></p>
 <ol>
 <li><strong>Intent → method map</strong> – for server only</li>
 </ol>
-<pre class="highlight"><code class="language-json">{
-  "hu.vmiklos.plees_tracker": {
-    "Open sleep statistics view": "accessStatistics",
-    "Opens the app's statistics screen to view summarized sleep data and averages.": "accessStatistics"
-  }
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;hu.vmiklos.plees_tracker&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Open sleep statistics view&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;accessStatistics&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;Opens the app&#39;s statistics screen to view summarized sleep data and averages.&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;accessStatistics&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>Stored at: <code>workspace/intent/intent_method_map.json</code></p>
 <p>Key separation:</p>
 <ul>
@@ -222,29 +226,32 @@
 <li>Validate a user message against those intents using a pluggable backend.</li>
 </ul>
 <h3 id="32-public-api">3.2 Public API<a class="headerlink" href="#32-public-api" title="Permanent link">&para;</a></h3>
-<pre class="highlight"><code class="language-python">class IntentValidator:
-    def get_intents_for_app(self, app_id: str) -&gt; List[str]: ...
-    def get_method_for_intent(self, app_id: str, intent: str) -&gt; Optional[str]: ...
-    def validate(self, app_id: str, message: str, history: Optional[List[Any]]) -&gt; IntentValidationResult: ...</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">IntentValidator</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_intents_for_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span> <span class="o">...</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_method_for_intent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">intent</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span> <span class="o">...</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">history</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">IntentValidationResult</span><span class="p">:</span> <span class="o">...</span>
+</code></pre></div>
 <h4 id="intentvalidationresult"><code>IntentValidationResult</code><a class="headerlink" href="#intentvalidationresult" title="Permanent link">&para;</a></h4>
-<pre class="highlight"><code class="language-python">@dataclass
-class IntentValidationResult:
-    is_supported: bool
-    matched_intent: Optional[str] = None
-    method_name: Optional[str] = None  # always resolved server-side from intent→method map
-    reason: Optional[str] = None</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IntentValidationResult</span><span class="p">:</span>
+    <span class="n">is_supported</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">matched_intent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">method_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># always resolved server-side from intent→method map</span>
+    <span class="n">reason</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
 <hr />
 <h2 id="4-backend-interface-intentmatcherbackend">4. Backend Interface: <code>IntentMatcherBackend</code><a class="headerlink" href="#4-backend-interface-intentmatcherbackend" title="Permanent link">&para;</a></h2>
 <p>To keep the system flexible, the actual “AI” piece is abstracted as a backend:</p>
-<pre class="highlight"><code class="language-python">class IntentMatcherBackend(Protocol):
-    def match_intent(
-        self,
-        app_id: str,
-        message: str,
-        intents: List[str],
-        history: Optional[List[Any]] = None,
-    ) -&gt; IntentValidationResult:
-        ...</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">IntentMatcherBackend</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">match_intent</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">app_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">intents</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">history</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IntentValidationResult</span><span class="p">:</span>
+        <span class="o">...</span>
+</code></pre></div>
 <p><strong>Key design choices:</strong></p>
 <ul>
 <li>The backend <strong>must only choose</strong> among the given <code>intents</code>, or reject.</li>
@@ -254,10 +261,11 @@ class IntentValidationResult:
 <h3 id="41-openai-backend-intent-only-schema">4.1 OpenAI Backend (intent-only schema)<a class="headerlink" href="#41-openai-backend-intent-only-schema" title="Permanent link">&para;</a></h3>
 <p><code>OpenAIIntentMatcherBackend</code> implements <code>IntentMatcherBackend</code> using the project-local <code>openai_client.send_request_to_gpt</code>.</p>
 <p>Schema used for GPT responses:</p>
-<pre class="highlight"><code class="language-python">class IntentMatchResultModel(BaseModel):
-    is_supported: bool
-    matched_intent: Optional[str] = None
-    reason: Optional[str] = None</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">IntentMatchResultModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">is_supported</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">matched_intent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">reason</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
 <p>Key points:</p>
 <ul>
 <li>GPT <strong>never</strong> returns a <code>method_name</code>.</li>
@@ -275,13 +283,16 @@ class IntentValidationResult:
 <li>Load <code>Session</code> from <code>SessionStore</code>.</li>
 <li>Append a <strong>user turn</strong>:</li>
 </ol>
-<pre class="highlight"><code class="language-python">Turn(role="user", message=message, type="user", timestamp=...)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">Turn</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=...</span><span class="p">)</span>
+</code></pre></div>
 <ol>
 <li>If <code>intent_validator</code> configured:</li>
 </ol>
-<pre class="highlight"><code class="language-python">response = self._handle_with_intent_validator(session, message)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_with_intent_validator</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+</code></pre></div>
 <p>Otherwise:</p>
-<pre class="highlight"><code class="language-python">response = self._fallback_clarification(session, message)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fallback_clarification</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+</code></pre></div>
 <ol>
 <li>Save the updated session.</li>
 <li>Return <code>AgentResponse</code> to the caller (clarification or action_plan).</li>
@@ -293,17 +304,19 @@ class IntentValidationResult:
 <ol>
 <li>Call the validator:</li>
 </ol>
-<pre class="highlight"><code class="language-python">result = intent_validator.validate(
-    app_id=session.app_id,
-    message=message,
-    history=list(session.turns),
-)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">intent_validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
+    <span class="n">app_id</span><span class="o">=</span><span class="n">session</span><span class="o">.</span><span class="n">app_id</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
+    <span class="n">history</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">turns</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
 <ol>
 <li>Extract:</li>
 </ol>
-<pre class="highlight"><code class="language-python">is_supported  = result.is_supported
-matched_intent = result.matched_intent
-reason         = result.reason</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">is_supported</span>  <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">is_supported</span>
+<span class="n">matched_intent</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">matched_intent</span>
+<span class="n">reason</span>         <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">reason</span>
+</code></pre></div>
 <ol>
 <li>
 <p><strong>Case 1 – Not supported</strong> (<code>is_supported == False</code>)</p>
@@ -316,19 +329,21 @@ reason         = result.reason</code></pre>
 <li>Log event: <code>intent_not_supported</code>.</li>
 <li>
 <p>Return:</p>
-<pre class="highlight"><code class="language-python">AgentResponse(type="clarification", ...)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">AgentResponse</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;clarification&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</code></pre></div>
 </li>
 <li>
 <p><strong>Case 2 – Supported: resolve method via map</strong></p>
 </li>
 <li>
 <p>Always resolve <code>method_name</code> from the server-side map, never from GPT:</p>
-<pre class="highlight"><code class="language-python">method_name: Optional[str] = None
-if result.matched_intent:
-    method_name = intent_validator.get_method_for_intent(
-        app_id=app_id,
-        intent=result.matched_intent,
-    )</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">method_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">matched_intent</span><span class="p">:</span>
+    <span class="n">method_name</span> <span class="o">=</span> <span class="n">intent_validator</span><span class="o">.</span><span class="n">get_method_for_intent</span><span class="p">(</span>
+        <span class="n">app_id</span><span class="o">=</span><span class="n">app_id</span><span class="p">,</span>
+        <span class="n">intent</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">matched_intent</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
 </li>
 <li>
 <p>If we <strong>cannot</strong> resolve <code>method_name</code>:</p>
@@ -347,7 +362,8 @@ if result.matched_intent:
 </li>
 <li>
 <p>Attempt:</p>
-<pre class="highlight"><code class="language-python">plan = actionplan_store.get_actionplan(app_id, method_name)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">plan</span> <span class="o">=</span> <span class="n">actionplan_store</span><span class="o">.</span><span class="n">get_actionplan</span><span class="p">(</span><span class="n">app_id</span><span class="p">,</span> <span class="n">method_name</span><span class="p">)</span>
+</code></pre></div>
 </li>
 <li>
 <p>If <code>plan</code> is missing:</p>
@@ -369,11 +385,13 @@ if result.matched_intent:
 <ul>
 <li>If <code>matched_intent</code> is available, use it as the short message:</li>
 </ul>
-<pre class="highlight"><code class="language-python">server_message = matched_intent</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">server_message</span> <span class="o">=</span> <span class="n">matched_intent</span>
+</code></pre></div>
 <ul>
 <li>Otherwise fall back to:</li>
 </ul>
-<pre class="highlight"><code class="language-python">server_message = f"Executing method '{method_name}' for app '{app_id}'."</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">server_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Executing method &#39;</span><span class="si">{</span><span class="n">method_name</span><span class="si">}</span><span class="s2">&#39; for app &#39;</span><span class="si">{</span><span class="n">app_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+</code></pre></div>
 </li>
 <li>
 <p>Append server turn with <code>type="action_plan"</code>.</p>
@@ -382,13 +400,14 @@ if result.matched_intent:
 <li>Log event: <code>actionplan_selected</code>.</li>
 <li>
 <p>Return:</p>
-<pre class="highlight"><code class="language-python">AgentResponse(
-  type="action_plan",
-  message=server_message,
-  method_name=method_name,
-  action_plan=plan,
-  next_session_id=None,
-)</code></pre>
+<div class="highlight"><pre><span></span><code><span class="n">AgentResponse</span><span class="p">(</span>
+  <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;action_plan&quot;</span><span class="p">,</span>
+  <span class="n">message</span><span class="o">=</span><span class="n">server_message</span><span class="p">,</span>
+  <span class="n">method_name</span><span class="o">=</span><span class="n">method_name</span><span class="p">,</span>
+  <span class="n">action_plan</span><span class="o">=</span><span class="n">plan</span><span class="p">,</span>
+  <span class="n">next_session_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
 </li>
 </ol>
 <hr />

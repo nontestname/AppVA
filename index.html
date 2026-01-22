@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An Automated Voice Assistant Generation Framework from GUI Test Cases Reusing">
+    <meta name="description" content="From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants">
     
-    <link rel="canonical" href="https://nontestname.github.io/ava-gen/">
+    <link rel="canonical" href="https://nontestname.github.io/appva/">
     <link rel="shortcut icon" href="img/favicon.ico">
 
     
-    <title>Home - AVA-Gen</title>
+    <title>Home - AppVA</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -59,7 +59,7 @@
             <!-- Main title -->
 
             
-              <a class="navbar-brand" href=".">AVA-Gen</a>
+              <a class="navbar-brand" href=".">AppVA</a>
             
         </div>
 
@@ -117,7 +117,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/nontestname/ava-gen"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://github.com/nontestname/appva"><i class="fab fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -129,7 +129,7 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#ava-gen">AVA-Gen</a></li>
+        <li class="first-level active"><a href="#appva">AppVA</a></li>
             <li class="second-level"><a href="#demo-video">Demo video</a></li>
                 
             <li class="second-level"><a href="#quick-start">Quick start</a></li>
@@ -138,19 +138,19 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="ava-gen">AVA-Gen<a class="headerlink" href="#ava-gen" title="Permanent link">&para;</a></h1>
-<p>AVA-Gen is an automated tool including two parts:</p>
+<h1 id="appva">AppVA<a class="headerlink" href="#appva" title="Permanent link">&para;</a></h1>
+<p>AppVA is an automated tool including two parts:</p>
 <ol>
 <li>A pipeline that converts existing Espresso UI tests (Java/Kotlin) into VA methods and using LLM calls (GPT APIs) to generate other code description artifacts.</li>
 <li>A runtime server and client architecture that support converting user request to the VA tasks.</li>
 </ol>
 <h2 id="demo-video">Demo video<a class="headerlink" href="#demo-video" title="Permanent link">&para;</a></h2>
-<p>You can watch a short demo of AVA‑Gen in action here:</p>
+<p>You can watch a short demo of AppVA in action here:</p>
 <p>https://youtu.be/z4p19QL6ejw</p>
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
   <iframe
     src="https://www.youtube.com/embed/z4p19QL6ejw"
-    title="AVA‑Gen Demo"
+    title="AppVA Demo"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen
@@ -162,17 +162,15 @@
 <ol>
 <li>Install the package from the project root:</li>
 </ol>
-<pre class="highlight"><code class="language-bash">pip install .</code></pre>
-<p>This installs the <code>ava-gen</code> CLI and the runtime components.</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>.
+</code></pre></div>
+<p>This installs the <code>appva</code> CLI and the runtime components.</p>
 <ol>
-<li>
-<p>Configure environment and OpenAI:</p>
-</li>
-<li>
-<p>Copy <code>.env.example</code> to <code>.env</code>, and edit it</p>
-</li>
+<li>Configure environment and OpenAI:</li>
+<li>Copy <code>.env.example</code> to <code>.env</code>, and edit it</li>
 </ol>
-<pre class="highlight"><code class="language-bash">cp .env.example .env</code></pre>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
+</code></pre></div>
 <ul>
 <li>
 <p>Set <code>OPENAI_API_KEY</code> and (optionally) variables such as <code>AVA_GEN_OPENAI_MODEL</code></p>
@@ -180,20 +178,20 @@
 <li>
 <p>Run your first end-to-end example using the real <code>workspace/</code> folder and the bundled app <code>hu.vmiklos.plees_tracker</code> by following:</p>
 </li>
-<li>
-<p><code>docs/running_example.md</code></p>
-</li>
+<li><code>docs/running_example.md</code></li>
 </ul>
-<p>This walks you through preparing inputs under <code>workspace/</code>, running <code>ava-gen pipeline hu.vmiklos.plees_tracker</code>, and inspecting the generated
+<p>This walks you through preparing inputs under <code>workspace/</code>, running <code>appva pipeline hu.vmiklos.plees_tracker</code>, and inspecting the generated
    artifacts (extracted tests, VA methods, skills, intents, action plans).</p>
 <ol>
 <li>Explore the CLI and pipelines for your own app (see <code>docs/cli.md</code> and <code>docs/getting-started.md</code> for details):</li>
 </ol>
-<pre class="highlight"><code class="language-bash">ava-gen --help</code></pre>
+<div class="highlight"><pre><span></span><code>appva<span class="w"> </span>--help
+</code></pre></div>
 <ol>
 <li>Start the runtime server (once workspace artifacts and action plans exist):</li>
 </ol>
-<pre class="highlight"><code class="language-bash">uvicorn runtime.api.server:app --reload</code></pre>
+<div class="highlight"><pre><span></span><code>uvicorn<span class="w"> </span>runtime.api.server:app<span class="w"> </span>--reload
+</code></pre></div>
 <p>See the <code>docs/</code> directory (used by MkDocs) for:</p>
 <ul>
 <li><code>docs/running_example.md</code> – concrete running example on the real workspace.</li>
@@ -304,5 +302,5 @@
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-12-09 00:48:03.956744+00:00
+Build Date UTC : 2026-01-22 15:14:05.426126+00:00
 -->

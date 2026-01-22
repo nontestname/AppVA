@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An Automated Voice Assistant Generation Framework from GUI Test Cases Reusing">
+    <meta name="description" content="From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants">
     
-    <link rel="canonical" href="https://nontestname.github.io/ava-gen/old/pipeline/">
+    <link rel="canonical" href="https://nontestname.github.io/appva/old/pipeline/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     
-    <title>Pipeline - AVA-Gen</title>
+    <title>Pipeline - AppVA</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -59,7 +59,7 @@
             <!-- Main title -->
 
             
-              <a class="navbar-brand" href="../..">AVA-Gen</a>
+              <a class="navbar-brand" href="../..">AppVA</a>
             
         </div>
 
@@ -107,7 +107,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/nontestname/ava-gen"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://github.com/nontestname/appva"><i class="fab fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -132,7 +132,7 @@
 
 <h1 id="pipeline">Pipeline<a class="headerlink" href="#pipeline" title="Permanent link">&para;</a></h1>
 <h2 id="workspace-layout-per-app">Workspace Layout (per app)<a class="headerlink" href="#workspace-layout-per-app" title="Permanent link">&para;</a></h2>
-<pre class="highlight"><code>workspace/
+<div class="highlight"><pre><span></span><code>workspace/
   &lt;app_id&gt;/
     input/
       app_introduction.txt   # optional app-level context for GPT
@@ -146,7 +146,8 @@ intent/
   intent_list_full.json             # GENERATED: per-app intents (plus optional intent_summary)
   intent_method_map.json            # GENERATED: intent -&gt; method_name mapping
 actionplan/
-  &lt;app_id&gt;_actionplan.json          # GENERATED: per-app ActionPlans</code></pre>
+  &lt;app_id&gt;_actionplan.json          # GENERATED: per-app ActionPlans
+</code></pre></div>
 <p>Developer responsibility: place test classes (and optional intro) into <code>workspace/&lt;app_id&gt;/input/</code> before running.</p>
 <h2 id="end-to-end-flow">End-to-End Flow<a class="headerlink" href="#end-to-end-flow" title="Permanent link">&para;</a></h2>
 <ol>
@@ -169,32 +170,36 @@ actionplan/
 <code>skill_interpreter.interpret_all_methods(app_id, workspace_root)</code> reads all VA methods under <code>va_methods/</code>, loads optional <code>app_introduction.txt</code>, asks GPT for short and detailed descriptions per method, and aggregates:</p>
 </li>
 </ol>
-<p><pre class="highlight"><code class="language-json">{
-  "app_id": "&lt;app_id&gt;",
-  "context_methods": {
-    "&lt;methodName&gt;": {
-      "description-short": "&lt;short intent&gt;",
-      "description-detail": "&lt;detailed intent&gt;"
-    }
-  }
-}</code></pre>
+<p><div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;app_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;app_id&gt;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;context_methods&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;&lt;methodName&gt;&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;description-short&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;short intent&gt;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;description-detail&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;detailed intent&gt;&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
    The CLI writes this to:</p>
-<pre class="highlight"><code class="language-text">workspace/skills_description/&lt;app_id&gt;_skills_description.json</code></pre>
+<div class="highlight"><pre><span></span><code>workspace/skills_description/&lt;app_id&gt;_skills_description.json
+</code></pre></div>
 <ol>
 <li><strong>Build intents</strong><br />
 <code>IntentInterpreter.export_full_intent_list()</code> and
    <code>IntentInterpreter.export_intent_method_map()</code> aggregate all per-app skill
    descriptions into:</li>
 </ol>
-<pre class="highlight"><code class="language-text">workspace/intent/intent_list_full.json
-workspace/intent/intent_method_map.json</code></pre>
+<div class="highlight"><pre><span></span><code>workspace/intent/intent_list_full.json
+workspace/intent/intent_method_map.json
+</code></pre></div>
 <p>These files are used by the runtime for intent validation.</p>
 <ol>
 <li><strong>Build ActionPlans</strong><br />
 <code>generate_action_plans_for_app(app_id, workspace_root)</code> parses each VA
    method into an ActionPlan and writes:</li>
 </ol>
-<pre class="highlight"><code class="language-text">workspace/actionplan/&lt;app_id&gt;_actionplan.json</code></pre>
+<div class="highlight"><pre><span></span><code>workspace/actionplan/&lt;app_id&gt;_actionplan.json
+</code></pre></div>
 <ol>
 <li><strong>Runtime</strong><br />
    The FastAPI runtime (<code>runtime/api/server.py</code>) loads the generated

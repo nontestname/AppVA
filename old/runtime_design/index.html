@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An Automated Voice Assistant Generation Framework from GUI Test Cases Reusing">
+    <meta name="description" content="From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants">
     
-    <link rel="canonical" href="https://nontestname.github.io/ava-gen/old/runtime_design/">
+    <link rel="canonical" href="https://nontestname.github.io/appva/old/runtime_design/">
     <link rel="shortcut icon" href="../../img/favicon.ico">
 
     
-    <title>AVA-Gen Runtime Design - AVA-Gen</title>
+    <title>AVA-Gen Runtime Design - AppVA</title>
     
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -59,7 +59,7 @@
             <!-- Main title -->
 
             
-              <a class="navbar-brand" href="../..">AVA-Gen</a>
+              <a class="navbar-brand" href="../..">AppVA</a>
             
         </div>
 
@@ -107,7 +107,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/nontestname/ava-gen"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://github.com/nontestname/appva"><i class="fab fa-github"></i> GitHub</a>
                     </li>
             </ul>
         </div>
@@ -163,7 +163,7 @@ It is designed for a lightweight, local environment where the desktop/laptop (ru
 </ul>
 <hr />
 <h1 id="1-runtime-folder-structure">1. Runtime Folder Structure<a class="headerlink" href="#1-runtime-folder-structure" title="Permanent link">&para;</a></h1>
-<pre class="highlight"><code>runtime/
+<div class="highlight"><pre><span></span><code>runtime/
   __init__.py
 
   api/
@@ -194,7 +194,8 @@ workspace/
     &lt;app_id&gt;_skills_description.json
   intent/
     intent_list_full.json        # per-app allowed intent strings (for GPT)
-    intent_method_map.json       # intent text -&gt; method_name (for server)</code></pre>
+    intent_method_map.json       # intent text -&gt; method_name (for server)
+</code></pre></div>
 <hr />
 <h1 id="2-responsibilities-of-each-component">2. Responsibilities of Each Component<a class="headerlink" href="#2-responsibilities-of-each-component" title="Permanent link">&para;</a></h1>
 <h2 id="runtimeapiserverpy"><code>runtime/api/server.py</code><a class="headerlink" href="#runtimeapiserverpy" title="Permanent link">&para;</a></h2>
@@ -249,28 +250,33 @@ workspace/
 <code>runtime/data/sessions/&lt;session_id&gt;.json</code></p>
 <h2 id="runtimestoreactionplan_storepy"><code>runtime/store/actionplan_store.py</code><a class="headerlink" href="#runtimestoreactionplan_storepy" title="Permanent link">&para;</a></h2>
 <p>Loads action plans from:</p>
-<pre class="highlight"><code>workspace/&lt;app_id&gt;/actionplan/&lt;app_id&gt;_actionplan.json</code></pre>
+<div class="highlight"><pre><span></span><code>workspace/&lt;app_id&gt;/actionplan/&lt;app_id&gt;_actionplan.json
+</code></pre></div>
 <p>Provides:</p>
-<pre class="highlight"><code>get_actionplan(app_id, method_name)</code></pre>
+<div class="highlight"><pre><span></span><code>get_actionplan(app_id, method_name)
+</code></pre></div>
 <h2 id="runtimestorelog_storepy"><code>runtime/store/log_store.py</code><a class="headerlink" href="#runtimestorelog_storepy" title="Permanent link">&para;</a></h2>
 <p>Append JSONL entries to:</p>
-<pre class="highlight"><code>runtime/data/logs/actions_YYYY-MM-DD.jsonl</code></pre>
+<div class="highlight"><pre><span></span><code>runtime/data/logs/actions_YYYY-MM-DD.jsonl
+</code></pre></div>
 <p>Format example:</p>
-<pre class="highlight"><code class="language-json">{
-  "ts": "2025-11-25T14:10:00Z",
-  "session_id": "123",
-  "app_id": "hu.vmiklos.plees_tracker",
-  "event_type": "action_plan_sent",
-  "payload": {
-    "method_name": "accessStatistics",
-    "step_count": 5
-  }
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-25T14:10:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;123&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;app_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hu.vmiklos.plees_tracker&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;event_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;action_plan_sent&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;method_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;accessStatistics&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;step_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <hr />
 <h1 id="3-session-flow-matches-the-5-rules">3. Session Flow (Matches the 5 Rules)<a class="headerlink" href="#3-session-flow-matches-the-5-rules" title="Permanent link">&para;</a></h1>
 <h2 id="1-start-session"><strong>1️⃣ Start Session</strong><a class="headerlink" href="#1-start-session" title="Permanent link">&para;</a></h2>
 <p>Client:</p>
-<pre class="highlight"><code>POST /start_session</code></pre>
+<div class="highlight"><pre><span></span><code>POST /start_session
+</code></pre></div>
 <p>Server:</p>
 <ul>
 <li>creates session_id (uuid4)</li>
@@ -279,16 +285,18 @@ workspace/
 <li>logs event</li>
 </ul>
 <p>Response:</p>
-<pre class="highlight"><code class="language-json">{ "session_id": "&lt;uuid&gt;" }</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;uuid&gt;&quot;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
 <hr />
 <h2 id="2-conversation-within-the-session"><strong>2️⃣ Conversation within the session</strong><a class="headerlink" href="#2-conversation-within-the-session" title="Permanent link">&para;</a></h2>
 <p>Client:</p>
-<pre class="highlight"><code>POST /agent/request
+<div class="highlight"><pre><span></span><code>POST /agent/request
 {
-  "session_id": "&lt;id&gt;",
-  "app_id": "&lt;app&gt;",
-  "message": "Open statistics screen"
-}</code></pre>
+  &quot;session_id&quot;: &quot;&lt;id&gt;&quot;,
+  &quot;app_id&quot;: &quot;&lt;app&gt;&quot;,
+  &quot;message&quot;: &quot;Open statistics screen&quot;
+}
+</code></pre></div>
 <p>Server:</p>
 <ul>
 <li>loads session</li>
@@ -309,14 +317,15 @@ workspace/
 <li>Creates <strong>next_session_id</strong></li>
 </ul>
 <p>Response:</p>
-<pre class="highlight"><code class="language-json">{
-  "type": "action_plan",
-  "session_id": "&lt;old&gt;",
-  "app_id": "hu.vmiklos.plees_tracker",
-  "method_name": "accessStatistics",
-  "action_plan": { ... },
-  "next_session_id": "&lt;new&gt;"
-}</code></pre>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;action_plan&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;old&gt;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;app_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hu.vmiklos.plees_tracker&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;method_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;accessStatistics&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;action_plan&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;next_session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;new&gt;&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
 <hr />
 <h2 id="4-history-cached"><strong>4️⃣ History cached</strong><a class="headerlink" href="#4-history-cached" title="Permanent link">&para;</a></h2>
 <p>Every request:</p>
@@ -326,7 +335,8 @@ workspace/
 <li>agent uses full dialog context</li>
 </ul>
 <p>Optional session persistence:</p>
-<pre class="highlight"><code>runtime/data/sessions/&lt;session_id&gt;.json</code></pre>
+<div class="highlight"><pre><span></span><code>runtime/data/sessions/&lt;session_id&gt;.json
+</code></pre></div>
 <hr />
 <h2 id="5-logging"><strong>5️⃣ Logging</strong><a class="headerlink" href="#5-logging" title="Permanent link">&para;</a></h2>
 <p>Every important event logged via LogStore:</p>
@@ -337,7 +347,8 @@ workspace/
 <li><code>action_plan_sent</code></li>
 </ul>
 <p>Saved to:</p>
-<pre class="highlight"><code>runtime/data/logs/actions_&lt;date&gt;.jsonl</code></pre>
+<div class="highlight"><pre><span></span><code>runtime/data/logs/actions_&lt;date&gt;.jsonl
+</code></pre></div>
 <hr />
 <h1 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h1>
 <p>This runtime design:</p>
