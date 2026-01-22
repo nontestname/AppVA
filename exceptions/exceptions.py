@@ -1,5 +1,5 @@
 """
-Custom exceptions for AVA-Gen converters and interpreters.
+Custom exceptions for AppVA converters and interpreters.
 
 These exceptions are intentionally simple and descriptive.
 They are used across:
@@ -8,7 +8,7 @@ They are used across:
   - core/interpreter/
   - runtime/server/
 
-Placing them at the project root (ava-gen/exceptions/) avoids
+Placing them at the project root (AppVA/exceptions/) avoids
 circular imports and keeps exception types consistent across modules.
 """
 

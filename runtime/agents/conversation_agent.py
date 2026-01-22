@@ -24,7 +24,7 @@ from ..models.session_models import Session, Turn, SessionStatus
 
 
 class ConversationAgent:
-    """Conversation + decision logic for AVA-Gen.
+    """Conversation + decision logic for AppVA.
 
     Parameters
     ----------
@@ -241,7 +241,7 @@ class ConversationAgent:
         """
         # Prepare a generic clarification message indicating the lack of intent processing.
         clarification_text = (
-            "(AVA-Gen placeholder) I received your request but intent-to-"
+            "(AppVA placeholder) I received your request but intent-to-"
             "ActionPlan logic is not implemented or not available. This is "
             "a dummy clarification response."
         )

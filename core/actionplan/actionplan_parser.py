@@ -506,7 +506,7 @@ def generate_action_plans_for_app(
         plans[plan.method_name] = plan
 
         # Debug/logging: summarize parsed action plan for this method
-        print(f"[AVA-Gen] Parsed VA method '{plan.method_name}' with {len(plan.steps)} steps.")
+        print(f"[AppVA] Parsed VA method '{plan.method_name}' with {len(plan.steps)} steps.")
         for idx, step in enumerate(plan.steps):
             print(
                 f"  [STEP {idx}] action={step.action} "
@@ -528,7 +528,7 @@ def generate_action_plans_for_app(
     }
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(output_obj, f, indent=2, ensure_ascii=False)
-    print(f"[AVA-Gen] Action plans written to: {out_path}")
+    print(f"[AppVA] Action plans written to: {out_path}")
 
 
 # ============================================================

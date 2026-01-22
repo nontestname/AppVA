@@ -1,5 +1,5 @@
 """
-Session-related models for AVA-Gen runtime.
+Session-related models for the AppVA runtime.
 
 These describe:
 - a minimal Session object

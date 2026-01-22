@@ -1,4 +1,4 @@
-"""Minimal session storage for AVA-Gen.
+"""Minimal session storage for the AppVA runtime.
 
 For now, this is primarily an in-memory dict of session_id -> Session,
 with optional JSON persistence under a data directory.

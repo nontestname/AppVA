@@ -1,10 +1,10 @@
-# AVA-Gen CLI Guide
+# AppVA CLI Guide
 
-This document describes the AVA-Gen command-line interface (CLI) and how it
+This document describes the AppVA command-line interface (CLI) and how it
 orchestrates the end-to-end workflow from **raw test classes** to
-**runtime-ready artifacts** for the AVA-Gen server.
+**runtime-ready artifacts** for the AppVA server.
 
-The CLI lives in `cli/main.py` and is exposed as the `ava-gen` command when
+The CLI lives in `cli/main.py` and is exposed as the `appva` command when
 you install the package.
 
 ---
@@ -22,14 +22,14 @@ pipx install .
 Once installed:
 
 ```bash
-ava-gen --help
+appva --help
 ```
 
 ---
 
 ## Configuration
 
-AVA-Gen reads configuration from environment variables (optionally via a
+AppVA reads configuration from environment variables (optionally via a
 `.env` file). Copy `.env.example` to `.env` and fill in your values:
 
 - `OPENAI_API_KEY` (required) – your OpenAI key.
@@ -48,15 +48,15 @@ The CLI option `--workspace-root` always takes precedence over
 
 High-level pipeline (per app):
 
-| Step | Command                           | Purpose                                                   | Key outputs                                                                 |
-|------|-----------------------------------|-----------------------------------------------------------|-----------------------------------------------------------------------------|
-| 1    | `ava-gen prepare <app_id> ...`    | Copy raw test classes / app intro into the workspace.     | `workspace/<app_id>/input/`                                                 |
-| 2    | `ava-gen extract <app_id>`        | Parse Espresso tests into per-test Java methods.          | `workspace/<app_id>/extracted_tests/`                                       |
-| 3    | `ava-gen generate-va <app_id>`    | Convert extracted tests into VA methods.                  | `workspace/<app_id>/va_methods/`                                            |
-| 4    | `ava-gen build-skills <app_id>`   | Build skill/context descriptions from VA methods.         | `workspace/skills_description/<app_id>_skills_description.json`             |
-| 5    | `ava-gen build-intents`           | Aggregate intents and intent→method mapping (all apps).   | `workspace/intent/intent_list_full.json`, `workspace/intent/intent_method_map.json` |
-| 6    | `ava-gen actionplan <app_id>`     | Build ActionPlans from VA methods for the given app.      | `workspace/actionplan/<app_id>_actionplan.json`                             |
-| 7    | `ava-gen pipeline <app_id>`       | Convenience command that runs steps 2–6 for one app.      | All of the above for `<app_id>`                                             |
+| Step | Command                       | Purpose                                                 | Key outputs                                                                         |
+| ---- | ----------------------------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| 1    | `appva prepare <app_id> ...`  | Copy raw test classes / app intro into the workspace.   | `workspace/<app_id>/input/`                                                         |
+| 2    | `appva extract <app_id>`      | Parse Espresso tests into per-test Java methods.        | `workspace/<app_id>/extracted_tests/`                                               |
+| 3    | `appva generate-va <app_id>`  | Convert extracted tests into VA methods.                | `workspace/<app_id>/va_methods/`                                                    |
+| 4    | `appva build-skills <app_id>` | Build skill/context descriptions from VA methods.       | `workspace/skills_description/<app_id>_skills_description.json`                     |
+| 5    | `appva build-intents`         | Aggregate intents and intent→method mapping (all apps). | `workspace/intent/intent_list_full.json`, `workspace/intent/intent_method_map.json` |
+| 6    | `appva actionplan <app_id>`   | Build ActionPlans from VA methods for the given app.    | `workspace/actionplan/<app_id>_actionplan.json`                                     |
+| 7    | `appva pipeline <app_id>`     | Convenience command that runs steps 2–6 for one app.    | All of the above for `<app_id>`                                                     |
 
 The VA runtime server is started separately, for example:
 
@@ -71,8 +71,8 @@ All commands accept an optional `--workspace-root` argument (default: `workspace
 ## Global options
 
 ```bash
-ava-gen <command> [options]
-ava-gen --workspace-root <PATH> <command> [options]
+appva <command> [options]
+appva --workspace-root <PATH> <command> [options]
 ```
 
 - By default, the workspace root is taken from `AVA_GEN_WORKSPACE_ROOT` or
@@ -96,7 +96,7 @@ an optional app introduction text).
 ### Usage
 
 ```bash
-ava-gen prepare <app_id> path/to/file
+appva prepare <app_id> path/to/file
 ```
 
 ### Behavior
@@ -109,21 +109,21 @@ ava-gen prepare <app_id> path/to/file
 Call this once for your test class, e.g.:
 
 ```bash
-ava-gen prepare com.example.myapp path/to/MyAppTest.java
+appva prepare com.example.myapp path/to/MyAppTest.java
 ```
 
 And optionally once for your app introduction:
 
 ```bash
-ava-gen prepare com.example.myapp path/to/app_introduction.txt
+appva prepare com.example.myapp path/to/app_introduction.txt
 ```
 
 ### Example output
 
 ```text
-[AVA-Gen] Preparing workspace for app_id=hu.vmiklos.plees_tracker
-[AVA-Gen] ➕ Copying file: tests/PleesTrackerTests.java → workspace/hu.vmiklos.plees_tracker/input/PleesTrackerTests.java
-[AVA-Gen] Workspace input updated
+[AppVA] Preparing workspace for app_id=hu.vmiklos.plees_tracker
+[AppVA] ➕ Copying file: tests/PleesTrackerTests.java → workspace/hu.vmiklos.plees_tracker/input/PleesTrackerTests.java
+[AppVA] Workspace input updated
 ```
 
 ---
@@ -135,7 +135,7 @@ Run the Espresso test parser and populate `extracted_tests/` for the app.
 ### Usage
 
 ```bash
-ava-gen extract <app_id>
+appva extract <app_id>
 ```
 
 ### Behavior
@@ -148,8 +148,8 @@ ava-gen extract <app_id>
 ### Example output
 
 ```text
-[AVA-Gen] Parsing test scripts for app_id=hu.vmiklos.plees_tracker...
-[AVA-Gen] ✓ 12 test methods extracted → workspace/hu.vmiklos.plees_tracker/extracted_tests/
+[AppVA] Parsing test scripts for app_id=hu.vmiklos.plees_tracker...
+[AppVA] ✓ 12 test methods extracted → workspace/hu.vmiklos.plees_tracker/extracted_tests/
 ```
 
 !!! note
@@ -165,7 +165,7 @@ Generate VA methods from the extracted tests for a specific app.
 ### Usage
 
 ```bash
-ava-gen generate-va <app_id>
+appva generate-va <app_id>
 ```
 
 ### Behavior
@@ -179,8 +179,8 @@ ava-gen generate-va <app_id>
 ### Example output
 
 ```text
-[AVA-Gen] Generating VA methods for app_id=hu.vmiklos.plees_tracker...
-[AVA-Gen] ✓ 5 VA methods created → workspace/hu.vmiklos.plees_tracker/va_methods/
+[AppVA] Generating VA methods for app_id=hu.vmiklos.plees_tracker...
+[AppVA] ✓ 5 VA methods created → workspace/hu.vmiklos.plees_tracker/va_methods/
 ```
 
 ---
@@ -192,7 +192,7 @@ Build skill/context descriptions for a specific app using the skill interpreter.
 ### Usage
 
 ```bash
-ava-gen build-skills <app_id>
+appva build-skills <app_id>
 ```
 
 ### Behavior
@@ -207,8 +207,8 @@ ava-gen build-skills <app_id>
 ### Example output
 
 ```text
-[AVA-Gen] Building JSON skill descriptions for app_id=hu.vmiklos.plees_tracker...
-[AVA-Gen] ✓ workspace/skills_description/hu.vmiklos.plees_tracker_skills_description.json written
+[AppVA] Building JSON skill descriptions for app_id=hu.vmiklos.plees_tracker...
+[AppVA] ✓ workspace/skills_description/hu.vmiklos.plees_tracker_skills_description.json written
 ```
 
 ---
@@ -221,7 +221,7 @@ intent validator.
 ### Usage
 
 ```bash
-ava-gen build-intents
+appva build-intents
 ```
 
 ### Behavior
@@ -229,7 +229,6 @@ ava-gen build-intents
 - Uses `core.interpreter.intent_interpreter.IntentInterpreter`.
 - Aggregates all `*_skills_description.json` files.
 - Writes:
-
   - `workspace/intent/intent_list_full.json`  
     – per-app **intent strings** (and optional `intent_summary` sentence) for GPT
     intent matching and capability summaries.
@@ -239,9 +238,9 @@ ava-gen build-intents
 ### Example output
 
 ```text
-[AVA-Gen] Building global intent list and intent→method map...
-[AVA-Gen] ✓ workspace/intent/intent_list_full.json written
-[AVA-Gen] ✓ workspace/intent/intent_method_map.json written
+[AppVA] Building global intent list and intent→method map...
+[AppVA] ✓ workspace/intent/intent_list_full.json written
+[AppVA] ✓ workspace/intent/intent_method_map.json written
 ```
 
 ---
@@ -253,7 +252,7 @@ Build ActionPlans for a specific app based on its generated VA methods.
 ### Usage
 
 ```bash
-ava-gen actionplan <app_id>
+appva actionplan <app_id>
 ```
 
 ### Behavior
@@ -267,8 +266,8 @@ ava-gen actionplan <app_id>
 ### Example output
 
 ```text
-[AVA-Gen] Building ActionPlans for app_id=hu.vmiklos.plees_tracker...
-[AVA-Gen] Action plans written to: workspace/actionplan/hu.vmiklos.plees_tracker_actionplan.json
+[AppVA] Building ActionPlans for app_id=hu.vmiklos.plees_tracker...
+[AppVA] Action plans written to: workspace/actionplan/hu.vmiklos.plees_tracker_actionplan.json
 ```
 
 ---
@@ -280,7 +279,7 @@ Run the main pipeline steps (2–6) for a single app in one command.
 ### Usage
 
 ```bash
-ava-gen pipeline <app_id> [--skip-intents]
+appva pipeline <app_id> [--skip-intents]
 ```
 
 - `--skip-intents`  
@@ -290,7 +289,6 @@ ava-gen pipeline <app_id> [--skip-intents]
 ### Behavior
 
 - For the given `app_id`, runs:
-
   1. `extract` (via `process_app_workspace`)
   2. `generate-va` (counting VA method files)
   3. `build-skills`
@@ -300,32 +298,32 @@ ava-gen pipeline <app_id> [--skip-intents]
 ### Example output
 
 ```text
-[AVA-Gen] Running full pipeline for app_id=hu.vmiklos.plees_tracker
-[AVA-Gen] Parsing test scripts...
-[AVA-Gen] 12 test methods extracted
+[AppVA] Running full pipeline for app_id=hu.vmiklos.plees_tracker
+[AppVA] Parsing test scripts...
+[AppVA] 12 test methods extracted
 
-[AVA-Gen] Generating VA methods...
-[AVA-Gen] 5 VA methods created
+[AppVA] Generating VA methods...
+[AppVA] 5 VA methods created
 
-[AVA-Gen] Building JSON skill descriptions...
-[AVA-Gen] workspace/skills_description/hu.vmiklos.plees_tracker_skills_description.json written
+[AppVA] Building JSON skill descriptions...
+[AppVA] workspace/skills_description/hu.vmiklos.plees_tracker_skills_description.json written
 
-[AVA-Gen] Building global intent artifacts...
-[AVA-Gen] workspace/intent/intent_list_full.json written
-[AVA-Gen] workspace/intent/intent_method_map.json written
+[AppVA] Building global intent artifacts...
+[AppVA] workspace/intent/intent_list_full.json written
+[AppVA] workspace/intent/intent_method_map.json written
 
-[AVA-Gen] Building ActionPlans...
-[AVA-Gen] Action plans written to: workspace/actionplan/hu.vmiklos.plees_tracker_actionplan.json
+[AppVA] Building ActionPlans...
+[AppVA] Action plans written to: workspace/actionplan/hu.vmiklos.plees_tracker_actionplan.json
 
-[AVA-Gen] All artifacts ready for runtime
-[AVA-Gen] Next step: start the VA runtime server
-[AVA-Gen]     uvicorn runtime.api.server:app --reload
+[AppVA] All artifacts ready for runtime
+[AppVA] Next step: start the VA runtime server
+[AppVA]     uvicorn runtime.api.server:app --reload
 ```
 
 If `--skip-intents` is used:
 
 ```text
-[AVA-Gen] Building global intent artifacts... (skipped)
+[AppVA] Building global intent artifacts... (skipped)
 ```
 
 ---

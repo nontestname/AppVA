@@ -38,7 +38,7 @@ def detect_language_from_path(path: str) -> str:
         return "java"
     if ext == ".kt":
         return "kotlin"
-    raise ValueError(f"Unsupported file extension for AVA-Gen: {ext}")
+    raise ValueError(f"Unsupported file extension for AppVA: {ext}")
 
 
 # ---------------------------------------------------------------------------
@@ -290,7 +290,7 @@ def generate_va_method_from_test_method(
 
 def process_app_workspace(app_id: str, workspace_root: str = "workspace") -> None:
     """
-    Process one app's AVA-Gen workspace.
+    Process one app's AppVA workspace.
 
     Expected workspace layout:
 
@@ -338,12 +338,12 @@ def process_app_workspace(app_id: str, workspace_root: str = "workspace") -> Non
 
         # Skip app introduction file
         if fname == "app_introduction.txt":
-            print(f"[AVA-Gen] Found app introduction: {fpath}")
+            print(f"[AppVA] Found app introduction: {fpath}")
             continue
 
         # Accept only Java/Kotlin test classes
         if not (fname.endswith(".java") or fname.endswith(".kt")):
-            print(f"[AVA-Gen] Skipping non-test file: {fname}")
+            print(f"[AppVA] Skipping non-test file: {fname}")
             continue
 
         # Determine language
@@ -361,7 +361,7 @@ def process_app_workspace(app_id: str, workspace_root: str = "workspace") -> Non
             ext = ".kt"
 
         if not test_methods:
-            print(f"[AVA-Gen] WARNING: No @Test methods found in {fname}")
+            print(f"[AppVA] WARNING: No @Test methods found in {fname}")
             continue
 
         # ------------------------------
@@ -399,7 +399,7 @@ def process_app_workspace(app_id: str, workspace_root: str = "workspace") -> Non
     # ------------------------------
     # Done!
     # ------------------------------
-    print(f"\n[AVA-Gen] Finished processing workspace for app_id='{app_id}'")
+    print(f"\n[AppVA] Finished processing workspace for app_id='{app_id}'")
     print(f"  Input directory:        {input_dir}")
     print(f"  Extracted test methods: {extracted_dir}")
     print(f"  VA methods output:      {va_dir}\n")

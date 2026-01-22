@@ -1,6 +1,6 @@
-site_name: AVA-Gen
-site_description: An Automated Voice Assistant Generation Framework from GUI Test Cases Reusing
-site_url: https://nontestname.github.io/ava-gen/
+site_name: AppVA
+site_description: From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants
+site_url: https://nontestname.github.io/appva/
 
 docs_dir: docs
 
@@ -11,7 +11,7 @@ nav:
   - CLI Guide: cli.md
   - Tool Paper & Evaluation: tool_paper.md
 
-repo_url: https://github.com/nontestname/ava-gen
+repo_url: https://github.com/nontestname/appva
 repo_name: GitHub # label next to the icon (optional)
 edit_uri: ''
 

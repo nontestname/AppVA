@@ -1,4 +1,4 @@
-"""HTTP routes for interacting with the AVA-Gen runtime.
+"""HTTP routes for interacting with the AppVA runtime.
 
 Exposes endpoints like:
 

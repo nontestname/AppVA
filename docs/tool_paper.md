@@ -1,22 +1,26 @@
-# Tool Paper & Evaluation Artifacts
+# Paper Intro & Evaluation Artifacts
 
-This page summarizes the research tool paper associated with AVA‑Gen and
+This page summarizes the research paper associated with AppVA and
 points to the evaluation data and reports stored in this repository.
 
 ## Paper information
 
 **Title**  
-AVA-Gen: An Automated Voice Assistant Generation Framework from GUI Test Cases Reusing
+From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants
 
 **Abstract**  
-Voice assistants (VAs) are increasingly used on mobile devices, yet integrating VA capabilities into existing applications remains labor-intensive and difficult to scale. We present AVA-Gen, an automated framework that generates voice-assistant functionality directly from an app’s GUI test code. AVA-Gen first builds a static analysis pipeline to convert the test methods to VA-ready artifacts, such as VA methods, task intents, skill descriptions, and executable action plans. At runtime, AVA-Gen provides a server–client architecture that validates user intents and executes the generated action plans on an Android device. Our evaluation shows that AVA-Gen successfully converts 19 out of 20 test methods to VA methods from five applications, and correctly handles 88 of 100 simulated user queries with different accuracy levels.
+Voice assistants are widely deployed on mobile platforms, yet most are designed as system-level services that remain poorly aligned with application-specific behavior. As a result, enabling voice interaction at the app level requires developers to manually reimplement application logic and interaction workflows, leading to high development and maintenance costs.
+
+We propose a novel, LLM-driven approach to automating app-specific voice assistants by repurposing GUI test code, which already encodes behavior-faithful, executable specifications of application functionality. In this paper, we advance a new perspective in which large language models act as semantic translators, reinterpreting GUI tests as bridges between application behavior and conversational interaction. By transforming test methods into app-specific VA artifacts, such as voice intents, action definitions, and executable interaction plans, our approach grounds voice assistants directly in existing application logic rather than external specifications.
+
+We illustrate this vision through AppVA, a research prototype system that operationalizes the idea on Android. Our preliminary experience across five open-source applications suggests that GUI test code can be systematically reused beyond verification, enabling the synthesis of app-specific voice assistants and pointing toward a broader research direction at the intersection of software testing, interaction design, and LLM-enabled automation.
 
 ---
 
 ## Evaluation data
 
 All evaluation data used in the paper is stored under the `eval_data/`
-directory in this repository.
+directory in the paper's git repository.
 
 ### 1. Evaluation workspaces
 

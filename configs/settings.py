@@ -12,13 +12,17 @@ load_dotenv()
 
 class Settings:
     """
-    Central configuration for AVA-Gen.
+    Central configuration for AppVA.
 
     Values are loaded once from environment variables (with sensible defaults)
     and then exposed via typed properties.
     """
 
     def __init__(self) -> None:
+
+        # Tool / branding
+        self._tool_name = os.getenv("AVA_GEN_TOOL_NAME", "AppVA")
+
         # OpenAI / model configuration
         self._openai_api_key = os.getenv("OPENAI_API_KEY")
         self._openai_base_url = os.getenv("OPENAI_BASE_URL") or None
@@ -62,6 +66,14 @@ class Settings:
     @property
     def intent_model(self) -> str:
         return self._intent_model
+    
+    # ------------------------------------------------------------------
+    # Tool / branding
+    # ------------------------------------------------------------------
+
+    @property
+    def tool_name(self) -> str:
+        return self._tool_name
 
     # ------------------------------------------------------------------
     # Paths

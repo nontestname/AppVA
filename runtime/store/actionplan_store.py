@@ -38,7 +38,7 @@ class ActionPlanStore:
             <workspace_root>/actionplan/<app_id>_actionplan.json
 
         By default this is "workspace" (relative to the current working
-        directory), matching the AVA-Gen convention.
+        directory), matching the AppVA convention.
     """
 
     def __init__(self, workspace_root: str = "workspace") -> None:

@@ -1,5 +1,5 @@
 """
-LogStore: append-only logging for AVA-Gen runtime events.
+LogStore: append-only logging for AppVA runtime events.
 
 This can write JSON lines to:
 
@@ -22,5 +22,4 @@ class LogStore:
         TODO: implement date-based JSONL logging.
         """
         raise NotImplementedError
-
 

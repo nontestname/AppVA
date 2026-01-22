@@ -1,5 +1,5 @@
 """
-Runtime package for the AVA-Gen local server.
+Runtime package for the AppVA local server.
 
 This package contains:
 - API layer (FastAPI server + routes)

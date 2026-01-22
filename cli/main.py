@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AVA-Gen CLI
+AppVA CLI
 
 This CLI orchestrates the end-to-end workflow from raw test classes to
 runtime-ready artifacts.
@@ -58,6 +58,8 @@ if str(ROOT_DIR) not in sys.path:
 from configs.settings import settings
 from core.converter.espresso.va_code_generator import process_app_workspace
 
+TOOL_PREFIX = f"[{settings.tool_name}]"
+
 
 def _count_files(directory: str, extensions: tuple[str, ...]) -> int:
     """Count files in a directory with given extensions."""
@@ -109,10 +111,10 @@ def cmd_prepare(app_id: str, src_path: str, workspace_root: str) -> None:
 
     dest_path = os.path.join(input_dir, os.path.basename(src_path))
 
-    print(f"[AVA-Gen] Preparing workspace for app_id={app_id}")
-    print(f"[AVA-Gen] ➕ Copying file: {src_path} → {dest_path}")
+    print(f"{TOOL_PREFIX} Preparing workspace for app_id={app_id}")
+    print(f"{TOOL_PREFIX} ➕ Copying file: {src_path} → {dest_path}")
     _copy_file(src_path, dest_path)
-    print("[AVA-Gen] Workspace input updated")
+    print("{TOOL_PREFIX} Workspace input updated")
 
 
 # ---------------------------------------------------------------------------
@@ -131,10 +133,10 @@ def cmd_extract(app_id: str, workspace_root: str) -> None:
     app_root = os.path.join(workspace_root, app_id)
     extracted_dir = os.path.join(app_root, "extracted_tests")
 
-    print(f"[AVA-Gen] Parsing test scripts for app_id={app_id}...")
+    print(f"{TOOL_PREFIX} Parsing test scripts for app_id={app_id}...")
     process_app_workspace(app_id=app_id, workspace_root=workspace_root)
     test_count = _count_files(extracted_dir, (".java", ".kt"))
-    print(f"[AVA-Gen] ✓ {test_count} test methods extracted → {extracted_dir}")
+    print(f"{TOOL_PREFIX} ✓ {test_count} test methods extracted → {extracted_dir}")
 
 
 def cmd_generate_va(app_id: str, workspace_root: str) -> None:
@@ -147,10 +149,10 @@ def cmd_generate_va(app_id: str, workspace_root: str) -> None:
     app_root = os.path.join(workspace_root, app_id)
     va_dir = os.path.join(app_root, "va_methods")
 
-    print(f"[AVA-Gen] Generating VA methods for app_id={app_id}...")
+    print(f"{TOOL_PREFIX} Generating VA methods for app_id={app_id}...")
     process_app_workspace(app_id=app_id, workspace_root=workspace_root)
     va_count = _count_files(va_dir, (".java",))
-    print(f"[AVA-Gen] ✓ {va_count} VA methods created → {va_dir}")
+    print(f"{TOOL_PREFIX} ✓ {va_count} VA methods created → {va_dir}")
 
 
 # ---------------------------------------------------------------------------
@@ -162,7 +164,7 @@ def cmd_build_skills(app_id: str, workspace_root: str) -> None:
     """
     Build skills/contexts for a single app and write skills_description JSON.
     """
-    print(f"[AVA-Gen] Building JSON skill descriptions for app_id={app_id}...")
+    print(f"{TOOL_PREFIX} Building JSON skill descriptions for app_id={app_id}...")
 
     # Lazy import so conversion-only mode works without OPENAI_API_KEY.
     # interpret_all_methods will read all VA methods for the app and write
@@ -182,7 +184,7 @@ def cmd_build_intents(workspace_root: str) -> None:
     Build global intent list and intent→method map for all apps that have
     skills_description files.
     """
-    print("[AVA-Gen] Building global intent list and intent→method map...")
+    print("{TOOL_PREFIX} Building global intent list and intent→method map...")
 
     # Lazy import to avoid pulling interpreter code when not needed.
     from core.interpreter.intent_interpreter import IntentInterpreter
@@ -191,8 +193,8 @@ def cmd_build_intents(workspace_root: str) -> None:
     list_path = interpreter.export_full_intent_list()
     map_path = interpreter.export_intent_method_map()
 
-    print(f"[AVA-Gen] ✓ {list_path} written")
-    print(f"[AVA-Gen] ✓ {map_path} written")
+    print(f"{TOOL_PREFIX} ✓ {list_path} written")
+    print(f"{TOOL_PREFIX} ✓ {map_path} written")
 
 
 # ---------------------------------------------------------------------------
@@ -206,7 +208,7 @@ def cmd_actionplan(app_id: str, workspace_root: str) -> None:
 
         {workspace_root}/actionplan/{app_id}_actionplan.json
     """
-    print(f"[AVA-Gen] Building ActionPlans for app_id={app_id}...")
+    print(f"{TOOL_PREFIX} Building ActionPlans for app_id={app_id}...")
 
     # Lazy import to avoid pulling actionplan code when not needed.
     from core.actionplan.actionplan_parser import generate_action_plans_for_app
@@ -224,38 +226,38 @@ def cmd_pipeline(app_id: str, workspace_root: str, skip_intents: bool) -> None:
     Run the full pipeline (extract, generate-va, build-skills, build-intents)
     for a single app_id.
     """
-    print(f"[AVA-Gen] Running full pipeline for app_id={app_id}")
+    print(f"{TOOL_PREFIX} Running full pipeline for app_id={app_id}")
 
     # Extract & VA generation in one go via process_app_workspace
     app_root = os.path.join(workspace_root, app_id)
     extracted_dir = os.path.join(app_root, "extracted_tests")
     va_dir = os.path.join(app_root, "va_methods")
 
-    print("[AVA-Gen] Parsing test scripts...")
+    print("{TOOL_PREFIX} Parsing test scripts...")
     process_app_workspace(app_id=app_id, workspace_root=workspace_root)
     test_count = _count_files(extracted_dir, (".java", ".kt"))
-    print(f"[AVA-Gen] ✓ {test_count} test methods extracted")
+    print(f"{TOOL_PREFIX} ✓ {test_count} test methods extracted")
 
-    print("\n[AVA-Gen] Generating VA methods...")
+    print("\n{TOOL_PREFIX} Generating VA methods...")
     va_count = _count_files(va_dir, (".java",))
-    print(f"[AVA-Gen] ✓ {va_count} VA methods created")
+    print(f"{TOOL_PREFIX} ✓ {va_count} VA methods created")
 
-    print("\n[AVA-Gen] Building JSON skill descriptions...")
+    print("\n{TOOL_PREFIX} Building JSON skill descriptions...")
     cmd_build_skills(app_id=app_id, workspace_root=workspace_root)
 
     if skip_intents:
-        print("\n[AVA-Gen] Building global intent artifacts... (skipped)")
+        print("\n{TOOL_PREFIX} Building global intent artifacts... (skipped)")
     else:
-        print("\n[AVA-Gen] Building global intent artifacts...")
+        print("\n{TOOL_PREFIX} Building global intent artifacts...")
         cmd_build_intents(workspace_root=workspace_root)
 
     # Build ActionPlans from VA methods for this app.
-    print("\n[AVA-Gen] Building ActionPlans...")
+    print("\n{TOOL_PREFIX} Building ActionPlans...")
     cmd_actionplan(app_id=app_id, workspace_root=workspace_root)
 
-    print("\n[AVA-Gen] All artifacts ready for runtime")
-    print("[AVA-Gen] Next step: start the VA runtime server using command:")
-    print("[AVA-Gen]     uvicorn runtime.api.server:app --reload")
+    print("\n{TOOL_PREFIX} All artifacts ready for runtime")
+    print("{TOOL_PREFIX} Next step: start the VA runtime server using command:")
+    print("{TOOL_PREFIX}     uvicorn runtime.api.server:app --reload")
 
 
 # ---------------------------------------------------------------------------
@@ -264,7 +266,7 @@ def cmd_pipeline(app_id: str, workspace_root: str, skip_intents: bool) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="AVA-Gen CLI")
+    parser = argparse.ArgumentParser(description=f"{TOOL_PREFIX} CLI")
     parser.add_argument(
         "--workspace-root",
         default=str(settings.workspace_root),

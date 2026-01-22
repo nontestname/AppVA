@@ -1,9 +1,9 @@
-# AVA-Gen: An Automated Voice Assistant Generation Framework from GUI Test Cases Reusing
+# AppVA: From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants
 
-AVA-Gen is an automated tool including two parts:
+AppVA is an automated tool including two parts:
 
-1. A pipeline that converts existing Espresso UI tests (Java/Kotlin) into VA methods and using LLM calls (GPT APIs) to generate other code description artifacts.
-2. A runtime server and client architecture that support converting user request to the VA tasks.
+1. A pipeline that converts existing Espresso UI tests (Java/Kotlin) into VA methods and uses LLM calls (GPT APIs) to generate other code description artifacts.
+2. A runtime server and client architecture that supports converting user requests to VA tasks.
 
 ## Quick start
 
@@ -13,7 +13,7 @@ AVA-Gen is an automated tool including two parts:
    pip install .
    ```
 
-   This installs the `ava-gen` CLI and the runtime components.
+   This installs the `appva` CLI and the runtime components.
 
 2. Configure environment and OpenAI:
 
@@ -29,13 +29,13 @@ AVA-Gen is an automated tool including two parts:
 
    - `docs/running_example.md`
 
-   This walks you through preparing inputs under `workspace/`, running `ava-gen pipeline hu.vmiklos.plees_tracker`, and inspecting the generated
+   This walks you through preparing inputs under `workspace/`, running `appva pipeline hu.vmiklos.plees_tracker`, and inspecting the generated
    artifacts (extracted tests, VA methods, skills, intents, action plans).
 
 4. Explore the CLI and pipelines for your own app (see `docs/cli.md` and `docs/getting-started.md` for details):
 
    ```bash
-   ava-gen --help
+   appva --help
    ```
 
 5. Start the runtime server (once workspace artifacts and action plans exist):
@@ -50,10 +50,9 @@ See the `docs/` directory (used by MkDocs) for:
 - `docs/cli.md` – CLI usage and pipeline overview.
 - `docs/runtime_server_client.md` – runtime usage.
 
-## AVA-Gen Android Client
+## AppVA Android Client
 
 Please follow the `docs/runtime_server_client.md` to set up the client.
 If interested, the src file of demo Android Client can be download: 
 You can download the demo Android Client source code here:
 [**Download Android Client Source (GitRepo)**](https://github.com/nontestname/ava-gen-client)
-

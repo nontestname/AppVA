@@ -3,13 +3,13 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ava-gen"
+name = "appva"
 version = "0.1.0"
-description = "AVA-Gen: convert Espresso UI tests into VA methods, skill descriptions, and runtime artifacts."
+description = "AppVA: From GUI Tests to Conversational Interaction: A New Perspective on App-Specific Voice Assistants"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
-  { name = "AVA-Gen Contributors" },
+  { name = "AppVA Contributors" },
 ]
 dependencies = [
   "openai>=1.0.0",
@@ -25,7 +25,7 @@ dev = [
 ]
 
 [project.scripts]
-ava-gen = "cli.main:main"
+appva = "cli.main:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

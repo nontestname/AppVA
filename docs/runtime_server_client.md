@@ -1,15 +1,15 @@
-# Using the AVA‑Gen Runtime (Server & Client)
+# Using the AppVA Runtime (Server & Client)
 
 This guide explains how to:
 
-- Start the AVA‑Gen runtime server.
+- Start the AppVA runtime server.
 - Call the `/agent` HTTP endpoints from a client.
 - Connect an Android emulator or a real phone to the server.
 - Note the small differences for macOS vs. Windows hosts.
 
 It assumes you have already:
 
-- Installed AVA‑Gen (`pip install .` or `pipx install ava-gen`).
+- Installed AppVA (`pip install .` or `pipx install appva`).
 - Configured `OPENAI_API_KEY` and run the pipeline so that:
   - `workspace/skills_description/*.json`
   - `workspace/intent/intent_list_full.json`
@@ -69,10 +69,10 @@ You should see:
 ## 2. Using an Android emulator
 
 To run the example app (or your own APK) in an Android emulator and connect it
-to the AVA‑Gen runtime server, you will typically:
+to the AppVA runtime server, you will typically:
 
 1. Start the emulator.
-2. Install the AVA‑Gen client APK (`ava-gen-client.apk`).
+2. Install the AppVA client APK (`ava-gen-client.apk`).
 3. Install your example/app-under-test APK.
 4. Configure the client app to talk to the host machine (`10.0.2.2:8000`).
 
@@ -87,9 +87,9 @@ Use Android Studio’s AVD Manager or the command line:
   emulator -avd <your_avd_name>
   ```
 
-### 2.2 Install the AVA‑Gen client APK
+### 2.2 Install the AppVA client APK
 
-Once the emulator is running, install the provided AVA‑Gen client APK:
+Once the emulator is running, install the provided AppVA client APK:
 
 ```bash
 adb install client/ava-gen-client_v1.apk
@@ -120,7 +120,7 @@ For the running example of `hu.vmiklos.plees_tracker`, please:
 adb install examples/plees-tracker-24.8.1.apk
 ```
 
-You should see AVA-Gen app in the Accessibility Tool List after the installation.
+You should see AppVA app in the Accessibility Tool List after the installation.
 
 ### 2.4 Configure the client app to talk to the server
 
@@ -134,7 +134,7 @@ So as long as you run the server and the emulator (with client) on the same comp
 
 ## 3. Using a real Android device (phone)
 
-You can also connect a physical phone to the AVA‑Gen runtime running on your
+You can also connect a physical phone to the AppVA runtime running on your
 Mac or Windows machine. There are two common patterns:
 
 1. Use `adb reverse` (USB cable, no Wi‑Fi configuration).
@@ -152,7 +152,7 @@ This works on Android 5.0+ and does not require exposing your server on the LAN.
    adb devices
    ```
 
-4. Start the AVA‑Gen server on your host:
+4. Start the AppVA server on your host:
 
    ```bash
    uvicorn runtime.api.server:app --reload
@@ -165,7 +165,7 @@ This works on Android 5.0+ and does not require exposing your server on the LAN.
    adb reverse tcp:8000 tcp:8000
    ```
 
-When the app calls, traffic is forwarded over USB to the AVA‑Gen server running on your Mac or Windows machine.
+When the app calls, traffic is forwarded over USB to the AppVA server running on your Mac or Windows machine.
 
 > On some cases, firewalls can block incoming connections. If the app cannot reach the server, check your firewall settings on macOS (System Settings → Network/Firewall) or Windows (Windows Defender Firewall).
 

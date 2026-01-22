@@ -1,6 +1,6 @@
 # interpreter/intent_validator.py
 """
-Intent validation and intent → method mapping for AVA-Gen.
+Intent validation and intent → method mapping for AppVA.
 
 This module now loads a pre-generated, aggregated intent list for all apps,
 rather than parsing individual *_skills_description.json files directly.

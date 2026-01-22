@@ -1,7 +1,7 @@
 """
 core.api.openai_client
 
-Thin wrapper around the OpenAI Chat Completions API for AVA-Gen.
+Thin wrapper around the OpenAI Chat Completions API for AppVA.
 
 Used by:
   - core/interpreter/skill_interpreter.py
@@ -29,7 +29,7 @@ client = OpenAI(
     base_url=settings.openai_base_url,
 )
 
-# Default model for AVA-Gen (customizable via AVA_GEN_OPENAI_MODEL)
+# Default model for AppVA (customizable via AVA_GEN_OPENAI_MODEL)
 DEFAULT_MODEL = settings.openai_model
 
 

@@ -1,5 +1,5 @@
 """
-Agents used by the AVA-Gen runtime.
+Agents used by the AppVA runtime.
 
 For now we only plan a minimal ConversationAgent that:
 
@@ -7,5 +7,4 @@ For now we only plan a minimal ConversationAgent that:
 - updates history
 - decides whether to ask clarification or return an ActionPlan
 """
-
 

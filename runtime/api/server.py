@@ -1,5 +1,5 @@
 """
-FastAPI application entry point for the AVA-Gen runtime.
+FastAPI application entry point for the AppVA runtime.
 
 Responsibilities:
 - create the FastAPI app
@@ -66,7 +66,7 @@ conversation_agent = ConversationAgent(
 # FastAPI app + route registration
 # ---------------------------------------------------------------------------
 
-app = FastAPI(title="AVA-Gen Runtime")
+app = FastAPI(title="AppVA Runtime")
 
 # Initialize the router module with our shared objects, then include it.
 session_routes.init_routes(

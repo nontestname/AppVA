@@ -1,12 +1,12 @@
-# AVA-Gen Running Example for preparing VA-Ready Artifacts
+# AppVA Running Example for preparing VA Artifacts
 
-This guide walks through a **concrete, end-to-end example** that generating all the VA-Ready Artifacts that your AVA-Gen sever may need later, using the example tests and application descriptions under `workspace/` folder and the bundled example app:
+This guide walks through a **concrete, end-to-end example** that generating all the VA-Ready Artifacts that your AppVA sever may need later, using the example tests and application descriptions under `workspace/` folder and the bundled example app:
 
 - `app_id`: `hu.vmiklos.plees_tracker`
 
 We assume you have already:
 
-- Installed AVA‑Gen from this repo (`pip install .` or `pipx install ava-gen`)
+- Installed AppVA from this repo (`pip install .` or `pipx install appva`)
 - Configured `OPENAI_API_KEY` via environment or `.env`
 
 All commands below are run from the project root (where `pyproject.toml` lives).
@@ -23,8 +23,8 @@ This repo ships an example test and app introduction under:
 Use the `prepare` command to copy these into the `workspace/` folder:
 
 ```bash
-ava-gen prepare hu.vmiklos.plees_tracker examples/hu.vmiklos.plees_tracker/DeleteAllSleepsTest.java
-ava-gen prepare hu.vmiklos.plees_tracker examples/hu.vmiklos.plees_tracker/app_introduction.txt
+appva prepare hu.vmiklos.plees_tracker examples/hu.vmiklos.plees_tracker/DeleteAllSleepsTest.java
+appva prepare hu.vmiklos.plees_tracker examples/hu.vmiklos.plees_tracker/app_introduction.txt
 ```
 
 After this, your real workspace will contain:
@@ -47,14 +47,13 @@ different `{app_id}`, different tests and app introduction.
 Now run the full pipeline against the `workspace/`:
 
 ```bash
-ava-gen pipeline hu.vmiklos.plees_tracker
+appva pipeline hu.vmiklos.plees_tracker
 ```
 
 This will automatically:
 
 - Parse the Espresso test class from `workspace/hu.vmiklos.plees_tracker/input/`
 - Generate _Code Artifacts_:
-
   - `workspace/hu.vmiklos.plees_tracker/extracted_tests/` – per-test method Java files
   - `workspace/hu.vmiklos.plees_tracker/va_methods/` – converted VA methods
 
@@ -90,26 +89,26 @@ workspace/
 
 **Congratulations!** Now you have succesfully generate all the VA-Ready Artifcats for your app `hu.vmiklos.plees_tracker` with skill extracted from test method `DeleteAllSleepsTest.java`
 
-The AVA-Gen server is ready to use all these artifacts to support the Voice Assistant on deleting all sleeps. Please see this to check details about AVA-Gen runtime server-client architecture.
+The AppVA server is ready to use all these artifacts to support the Voice Assistant on deleting all sleeps. Please see this to check details about AppVA runtime server-client architecture.
 
 ---
 
 ## 3. Adapt the pattern to your own app
 
-To use AVA‑Gen with your own app under the same `workspace/` root:
+To use AppVA with your own app under the same `workspace/` root:
 
 1. Choose your app id, e.g. `com.example.myapp`.
 2. Prepare input files:
 
    ```bash
-   ava-gen prepare com.example.myapp path/to/MyAppTest.java
-   ava-gen prepare com.example.myapp path/to/app_introduction.txt   # optional
+   appva prepare com.example.myapp path/to/MyAppTest.java
+   appva prepare com.example.myapp path/to/app_introduction.txt   # optional
    ```
 
 3. Run the pipeline:
 
    ```bash
-   ava-gen pipeline com.example.myapp
+   appva pipeline com.example.myapp
    ```
 
 You will get the same kinds of outputs as the `hu.vmiklos.plees_tracker` example,

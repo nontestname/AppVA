@@ -1,5 +1,5 @@
 """
-HTTP request/response models for the AVA-Gen runtime API.
+HTTP request/response models for the AppVA runtime API.
 """
 
 from pydantic import BaseModel
@@ -36,4 +36,3 @@ class AgentResponse(BaseModel):
     method_name: Optional[str] = None
     action_plan: Optional[Any] = None
     next_session_id: Optional[str] = None
-
